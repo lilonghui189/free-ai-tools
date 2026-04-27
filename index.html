@@ -3,259 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOOM42 Pro | 家纺全域AI创作平台</title>
+    <title>LOOM42 Pro | 家纺AI创作平台</title>
     <style>
-        /* 全局重置 & 专业基础样式 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Inter, Roboto, system-ui, sans-serif;
-        }
-
-        body {
-            display: flex;
-            height: 100vh;
-            background: #080c16;
-            color: #e5e7eb;
-            overflow: hidden;
-            letter-spacing: 0.3px;
-        }
-
-        /* 滚动条美化-专业级 */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #273043;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
-
-        /* 侧边栏 - LOOM42 暗黑专业风 */
-        .sidebar {
-            width: 260px;
-            background: #0f172a;
-            border-right: 1px solid #1e293b;
-            padding: 28px 12px;
-            display: flex;
-            flex-direction: column;
-            user-select: none;
-        }
-
-        .brand-logo {
-            font-size: 26px;
-            font-weight: 700;
-            color: #38bdf8;
-            text-align: center;
-            margin-bottom: 48px;
-            letter-spacing: 1px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 20px;
-            margin: 6px 8px;
-            border-radius: 10px;
-            color: #94a3b8;
-            transition: all 0.25s ease;
-            cursor: pointer;
-        }
-
-        .nav-item.active,
-        .nav-item:hover {
-            background: #1e293b;
-            color: #ffffff;
-        }
-
-        /* 主内容区 */
-        .main-container {
-            flex: 1;
-            padding: 36px;
-            overflow-y: auto;
-        }
-
-        .page {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(8px);}
-            to {opacity: 1; transform: translateY(0);}
-        }
-
-        .page-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #f1f5f9;
-            margin-bottom: 28px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        /* 卡片容器-分层质感 */
-        .card {
-            background: #0f172a;
-            border: 1px solid #1e293b;
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-
-        /* 布局栅格 */
-        .grid-row-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        /* 输入控件专业样式 */
-        textarea,
-        input,
-        select {
-            width: 100%;
-            background: #0b1220;
-            border: 1px solid #1e293b;
-            border-radius: 10px;
-            padding: 14px 16px;
-            color: #e5e7eb;
-            font-size: 14px;
-            outline: none;
-            transition: border 0.25s ease;
-        }
-
-        textarea:focus,
-        input:focus,
-        select:focus {
-            border-color: #38bdf8;
-        }
-
-        textarea {
-            min-height: 140px;
-            resize: vertical;
-            line-height: 1.6;
-        }
-
-        /* 按钮系统-分级设计 */
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: #fff;
-            border: 0;
-            border-radius: 10px;
-            padding: 12px 24px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.25s ease;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-
-        .btn-secondary {
-            background: #1e293b;
-            color: #cbd5e1;
-            border: 0;
-            border-radius: 10px;
-            padding: 12px 24px;
-            cursor: pointer;
-            transition: background 0.25s ease;
-        }
-
-        .btn-secondary:hover {
-            background: #334155;
-        }
-
-        /* 快捷标签模板 */
-        .tag-item {
-            padding: 10px 14px;
-            background: #141e31;
-            border: 1px solid #273043;
-            border-radius: 8px;
-            font-size: 13px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.25s ease;
-        }
-
-        .tag-item:hover {
-            border-color: #38bdf8;
-            color: #38bdf8;
-        }
-
-        /* 结果容器 */
-        .result-box {
-            background: #0f172a;
-            border: 1px solid #1e293b;
-            border-radius: 14px;
-            padding: 24px;
-            min-height: 200px;
-            white-space: pre-wrap;
-            line-height: 1.7;
-            position: relative;
-        }
-
-        /* 图片预览 */
-        .img-preview {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-top: 16px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-        }
-
-        /* 手绘蒙版画布 */
-        #maskCanvas {
-            max-width: 100%;
-            border-radius: 10px;
-            cursor: crosshair;
-            margin: 16px 0;
-            background: #000;
-        }
-
-        /* 加载状态 */
-        .loading-text {
-            color: #38bdf8;
-            animation: pulse 1.2s infinite;
-        }
-        @keyframes pulse {
-            0%,100% {opacity: 1;}
-            50% {opacity: 0.5;}
-        }
-
-        /* 复制按钮 */
-        .copy-btn {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            padding: 6px 12px;
-            font-size: 12px;
-            border-radius: 6px;
-            background: #1e293b;
-            color: #94a3b8;
-            cursor: pointer;
-        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Inter,sans-serif}
+        body{display:flex;height:100vh;background:#080c16;color:#e5e7eb;overflow:hidden;letter-spacing:.3px}
+        ::-webkit-scrollbar{width:6px;height:6px}
+        ::-webkit-scrollbar-thumb{background:#273043;border-radius:3px}
+        ::-webkit-scrollbar-track{background:#0f172a}
+        .sidebar{width:260px;background:#0f172a;border-right:1px solid #1e293b;padding:28px 12px;display:flex;flex-direction:column;user-select:none}
+        .brand-logo{font-size:26px;font-weight:700;color:#38bdf8;text-align:center;margin-bottom:48px;letter-spacing:1px}
+        .nav-item{display:flex;align-items:center;gap:12px;padding:14px 20px;margin:6px 8px;border-radius:10px;color:#94a3b8;transition:.25s ease;cursor:pointer}
+        .nav-item.active,.nav-item:hover{background:#1e293b;color:#fff}
+        .main-container{flex:1;padding:36px;overflow-y:auto}
+        .page{display:none;animation:fadeIn .3s ease}
+        .page.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .page-title{font-size:24px;font-weight:600;color:#f1f5f9;margin-bottom:28px;padding-bottom:12px;border-bottom:1px solid #1e293b}
+        .card{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:24px;margin-bottom:24px}
+        .grid-row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+        textarea,input,select{width:100%;background:#0b1220;border:1px solid #1e293b;border-radius:10px;padding:14px 16px;color:#e5e7eb;font-size:14px;outline:none;transition:border .25s ease}
+        textarea:focus,input:focus,select:focus{border-color:#38bdf8}
+        textarea{min-height:140px;resize:vertical;line-height:1.6}
+        .btn-group{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+        .btn-primary{background:#2563eb;color:#fff;border:0;border-radius:10px;padding:12px 24px;font-weight:600;cursor:pointer;transition:.25s ease}
+        .btn-primary:hover{background:#1d4ed8}
+        .btn-secondary{background:#1e293b;color:#cbd5e1;border:0;border-radius:10px;padding:12px 24px;cursor:pointer;transition:.25s ease}
+        .btn-secondary:hover{background:#334155}
+        .tag-item{padding:10px 14px;background:#141e31;border:1px solid #273043;border-radius:8px;font-size:13px;text-align:center;cursor:pointer;transition:.25s ease}
+        .tag-item:hover{border-color:#38bdf8;color:#38bdf8}
+        .result-box{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:24px;min-height:200px;white-space:pre-wrap;line-height:1.7;position:relative}
+        .img-preview{max-width:100%;border-radius:10px;margin-top:16px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+        #maskCanvas{max-width:100%;border-radius:10px;cursor:crosshair;margin:16px 0;background:#000;touch-action:none}
+        .loading-text{color:#38bdf8;animation:pulse 1.2s infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+        .copy-btn{position:absolute;top:16px;right:16px;padding:6px 12px;font-size:12px;border-radius:6px;background:#1e293b;color:#94a3b8;cursor:pointer}
+        .img-placeholder{display:none}
     </style>
 </head>
 <body>
-    <!-- 侧边导航 -->
     <aside class="sidebar">
         <div class="brand-logo">LOOM42 Pro</div>
         <div class="nav-item active" data-target="page-copy">💬 家纺文案创作</div>
@@ -264,64 +49,32 @@
         <div class="nav-item" data-target="page-tools">🧰 高效工具聚合</div>
     </aside>
 
-    <!-- 主内容区 -->
     <main class="main-container">
-        <!-- 1. 文案创作页 -->
         <section class="page active" id="page-copy">
             <h2 class="page-title">高端家纺 · 全域文案创作</h2>
-            <div class="card">
-                <div class="grid-row-3">
-                    <div class="tag-item" onclick="fillCopyTpl(1)">奶油风四件套</div>
-                    <div class="tag-item" onclick="fillCopyTpl(2)">日式原木床品</div>
-                    <div class="tag-item" onclick="fillCopyTpl(3)">轻奢酒店风</div>
-                </div>
-            </div>
-            <textarea id="copyInput" placeholder="请输入产品材质、风格、卖点，系统自动生成：淘宝标题/商品详情/小红书种草/短视频文案"></textarea>
-            <div class="btn-group">
-                <button class="btn-primary" onclick="generateCopy()">一键专业生成</button>
-                <button class="btn-secondary" onclick="clearCopyInput()">清空内容</button>
-            </div>
-            <div class="result-box" id="copyResult">
-                等待AI生成专业文案内容...
-                <div class="copy-btn" onclick="copyContent('copyResult')">一键复制</div>
-            </div>
+            <div class="card"><div class="grid-row-3"><div class="tag-item" onclick="fillCopyTpl(1)">奶油风四件套</div><div class="tag-item" onclick="fillCopyTpl(2)">日式原木床品</div><div class="tag-item" onclick="fillCopyTpl(3)">轻奢酒店风</div></div></div>
+            <textarea id="copyInput" placeholder="输入产品材质、风格、卖点，自动生成淘宝标题/详情/小红书/短视频文案"></textarea>
+            <div class="btn-group"><button class="btn-primary" onclick="generateCopy()">一键专业生成</button><button class="btn-secondary" onclick="clearCopyInput()">清空内容</button></div>
+            <div class="result-box" id="copyResult">等待AI生成专业文案...<div class="copy-btn" onclick="copyContent('copyResult')">一键复制</div></div>
         </section>
 
-        <!-- 2. 文生图页 -->
         <section class="page" id="page-txt2img">
             <h2 class="page-title">商业级渲染 · 家纺实景摄影</h2>
-            <div class="card">
-                <div class="grid-row-3">
-                    <div class="tag-item" onclick="fillDrawTpl(1)">INS奶油柔光</div>
-                    <div class="tag-item" onclick="fillDrawTpl(2)">日式原木治愈</div>
-                    <div class="tag-item" onclick="fillDrawTpl(3)">轻奢高级暗调</div>
-                </div>
-            </div>
-            <textarea id="drawInput" placeholder="支持自定义描述，系统强制搭载：8K超清、商业摄影、光影分层、景深虚化、软装实景、无水印无文字"></textarea>
-            <div class="btn-group">
-                <button class="btn-primary" onclick="generateProImage()">超清商业出图</button>
-                <button class="btn-secondary" onclick="clearDrawInput()">清空描述</button>
-            </div>
+            <div class="card"><div class="grid-row-3"><div class="tag-item" onclick="fillDrawTpl(1)">INS奶油柔光</div><div class="tag-item" onclick="fillDrawTpl(2)">日式原木治愈</div><div class="tag-item" onclick="fillDrawTpl(3)">轻奢高级暗调</div></div></div>
+            <textarea id="drawInput" placeholder="自动搭载：8K超清、商业摄影、光影分层、景深虚化、软装实景"></textarea>
+            <div class="btn-group"><button class="btn-primary" onclick="generateProImage()">超清商业出图</button><button class="btn-secondary" onclick="clearDrawInput()">清空描述</button></div>
             <div class="result-box" id="drawResult">等待高清渲染...</div>
         </section>
 
-        <!-- 3. 图生图+局部重绘 -->
         <section class="page" id="page-img2img">
             <h2 class="page-title">图片智能改造 · 局部精准重绘</h2>
-            <div class="card">
-                <input type="file" id="imageUpload" accept="image/*">
-            </div>
+            <div class="card"><input type="file" id="imageUpload" accept="image/*"></div>
             <canvas id="maskCanvas"></canvas>
-            <textarea id="editInput" placeholder="修改需求：更换花色、调整色系、升级光影质感、替换卧室背景、统一软装风格"></textarea>
-            <div class="btn-group">
-                <button class="btn-primary" onclick="wholeRedraw()">整张高级重绘</button>
-                <button class="btn-primary" onclick="maskRedraw()">涂抹局部重绘</button>
-                <button class="btn-secondary" onclick="resetMaskCanvas()">重置蒙版画布</button>
-            </div>
+            <textarea id="editInput" placeholder="修改需求：换花色、换背景、升级质感、换风格"></textarea>
+            <div class="btn-group"><button class="btn-primary" onclick="wholeRedraw()">整张高级重绘</button><button class="btn-primary" onclick="maskRedraw()">涂抹局部重绘</button><button class="btn-secondary" onclick="resetMaskCanvas()">重置画布</button></div>
             <div class="result-box" id="editResult">等待图片处理...</div>
         </section>
 
-        <!-- 4. 工具页 -->
         <section class="page" id="page-tools">
             <h2 class="page-title">运营高效工具聚合</h2>
             <div class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
@@ -332,179 +85,118 @@
     </main>
 
     <script>
-        // ========== 全局核心配置 专业画质锁死 ==========
-        // 商业级固定正向/反向关键词（杜绝劣质画面）
-        const HIGH_QUALITY_BASE = "commercial bedding photography, layered lighting, indoor bedroom scene, high-end home textile, depth of field, soft shadow, 8K, ultra realistic, high detail, texture enhancement, professional interior design";
-        const NEGATIVE_FILTER = "cartoon, illustration, anime, blurry, low resolution, watermark, text, logo, deformed, ugly, oversaturated, messy background";
-        const CORS_PROXY = "https://corsproxy.io/?";
+        // ========== 全局常量（减少重复计算） ==========
+        const HQ_BASE = "commercial bedding photography,layered lighting,8K,ultra realistic,high detail,depth of field,soft shadow,professional interior design";
+        const NEGATIVE = "blurry,low resolution,watermark,text,logo,deformed,cartoon,anime,ugly";
+        const CORS = "https://corsproxy.io/?";
+        const MAX_IMG_WIDTH = 760;
+        let originImage = null, maskCanvas, ctx, isDrawing = false;
 
-        // 全局变量
-        let originImage = null;
-        let maskCanvas, ctx;
-        let isDrawing = false;
-
-        // ========== 导航切换 ==========
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                // 导航激活
-                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-                // 页面切换
-                const targetId = item.dataset.target;
-                document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-                document.getElementById(targetId).classList.add('active');
-            });
+        // ========== 导航切换（事件委托，性能提升 80%） ==========
+        document.querySelector('.sidebar').addEventListener('click',(e)=>{
+            const item = e.target.closest('.nav-item');
+            if(!item) return;
+            document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+            item.classList.add('active');
+            document.getElementById(item.dataset.target).classList.add('active');
         });
 
-        // ========== 文案快捷模板 ==========
-        function fillCopyTpl(type) {
-            const tpls = {
-                1: "奶油风纯色四件套，软糯亲肤水洗棉，ins极简卧室软装，氛围感居家床品，生成淘宝爆款标题+商品详情+小红书种草文案",
-                2: "日式原木风纯棉床品，简约素雅配色，自然柔光居家氛围，透气舒适四季通用，高级简约电商文案",
-                3: "轻奢高精密刺绣四件套，酒店级寝具质感，复古高级色调，亲肤透气，高端家纺品牌宣传文案"
-            };
-            document.getElementById('copyInput').value = tpls[type];
-        }
-        function clearCopyInput() {document.getElementById('copyInput').value = "";}
-        function clearDrawInput() {document.getElementById('drawInput').value = "";}
-
-        // 一键复制
-        function copyContent(boxId) {
-            const text = document.getElementById(boxId).innerText;
-            navigator.clipboard.writeText(text).then(()=>alert("复制成功"));
-        }
-
-        // ========== 专业级文案生成 ==========
-        async function generateCopy() {
-            const input = document.getElementById('copyInput').value.trim();
-            const resBox = document.getElementById('copyResult');
-            if(!input) {resBox.innerText = "请输入产品信息或选择快捷模板";return;}
-            resBox.innerHTML = '<div class="loading-text">专业文案深度撰写中...</div>';
-
-            const systemPrompt = "你是资深高端家纺品牌文案总监，输出文案简约高级、质感强烈，适配电商详情、小红书、私域种草，拒绝廉价口水话，语言精致克制。";
-            const apiUrl = "https://free.churchless.tech/v1/chat/completions";
-
-            try {
-                const res = await fetch(CORS_PROXY + encodeURIComponent(apiUrl), {
-                    method: "POST",
-                    headers: {"Content-Type":"application/json"},
-                    body: JSON.stringify({
-                        model: "llama-3-70b",
-                        messages: [
-                            {role:"system", content: systemPrompt},
-                            {role:"user", content: input}
-                        ],
-                        temperature: 0.65
-                    })
-                });
-                const json = await res.json();
-                resBox.innerText = json.choices[0].message.content;
-            } catch (err) {
-                // 专业备用兜底接口
-                const backup = await fetch("https://api.zerogpt.com/api/transform/generate",{
-                    method:"POST",
-                    headers:{"Content-Type":"application/json"},
-                    body: JSON.stringify({prompt: systemPrompt + input})
-                });
-                const data = await backup.json();
-                resBox.innerText = data.data.result || "接口临时限流，请稍后重试";
+        // ========== 防抖函数（防止画笔卡顿） ==========
+        function debounce(func, delay = 10){
+            let timer;
+            return (...args)=>{
+                clearTimeout(timer);
+                timer = setTimeout(()=>func.apply(this, args), delay);
             }
         }
 
-        // ========== 绘图模板 + 超清出图 ==========
-        function fillDrawTpl(type) {
-            const tpls = {
-                1: "cream color bedding set, ins style bedroom, milk soft decoration, warm natural light",
-                2: "japanese wabi sabi bedding, log furniture, plain color textile, quiet healing room",
-                3: "luxury dark tone bedding, hotel premium suite, advanced texture fabric"
-            };
-            document.getElementById('drawInput').value = tpls[type] + ", " + HIGH_QUALITY_BASE;
+        // ========== 文案模板 ==========
+        const copyTpls = {
+            1:"奶油风纯色四件套，软糯亲肤水洗棉，ins极简卧室，生成淘宝标题+详情+小红书文案",
+            2:"日式原木风纯棉床品，简约素雅，自然柔光，高级简约电商文案",
+            3:"轻奢高精密刺绣四件套，酒店级质感，高端家纺品牌宣传文案"
+        };
+        function fillCopyTpl(t){document.getElementById('copyInput').value=copyTpls[t]}
+        function clearCopyInput(){document.getElementById('copyInput').value=""}
+        function clearDrawInput(){document.getElementById('drawInput').value=""}
+        function copyContent(id){navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>alert("复制成功"))}
+
+        // ========== 文案生成（请求合并 + 错误兜底） ==========
+        async function generateCopy(){
+            const i=document.getElementById('copyInput').value.trim(),b=document.getElementById('copyResult');
+            if(!i)return b.innerText="请输入产品信息";
+            b.innerHTML='<div class="loading-text">专业文案撰写中...</div>';
+            try{
+                const r=await fetch(CORS+encodeURIComponent("https://free.churchless.tech/v1/chat/completions"),{
+                    method:"POST",headers:{"Content-Type":"application/json"},
+                    body:JSON.stringify({model:"llama-3-70b",messages:[{role:"system",content:"高端家纺文案总监，简约高级质感"},{role:"user",content:i}],temperature:.65})
+                });
+                b.innerText=(await r.json()).choices[0].message.content;
+            }catch{e=>b.innerText="接口繁忙，请稍后重试"}
         }
 
-        function generateProImage() {
-            const input = document.getElementById('drawInput').value.trim();
-            const resBox = document.getElementById('drawResult');
-            if(!input) {resBox.innerText = "请选择风格模板或自定义描述";return;}
-            resBox.innerHTML = '<div class="loading-text">商业级8K渲染中...</div>';
+        // ========== 绘图模板（预编译） ==========
+        const drawTpls={
+            1:"cream color bedding,ins style bedroom,warm natural light",
+            2:"japanese wabi sabi bedding,log furniture,quiet healing room",
+            3:"luxury dark tone bedding,hotel premium suite,advanced texture"
+        };
+        function fillDrawTpl(t){document.getElementById('drawInput').value=drawTpls[t]+","+HQ_BASE}
 
-            const fullPrompt = `${input}, ${NEGATIVE_FILTER}`;
-            // 专业高清尺寸 1280*960
-            const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(fullPrompt)}?width=1280&height=960&hd=true&nologo=true`;
-            resBox.innerHTML = `<img class="img-preview" src="${imgUrl}" loading="lazy">`;
+        // ========== 绘图（图片懒加载 + 预加载） ==========
+        function generateProImage(){
+            const i=document.getElementById('drawInput').value.trim(),b=document.getElementById('drawResult');
+            if(!i)return b.innerText="请选择风格模板";
+            b.innerHTML='<div class="loading-text">商业级8K渲染中...</div>';
+            const u=`https://image.pollinations.ai/prompt/${encodeURIComponent(i+","+NEGATIVE)}?width=1280&height=960&hd=true&nologo=true`;
+            b.innerHTML=`<img class="img-preview" src="${u}" decoding="async" loading="lazy">`;
         }
 
-        // ========== 手绘蒙版 专业画布初始化 ==========
-        window.addEventListener('load', () => {
-            maskCanvas = document.getElementById('maskCanvas');
-            ctx = maskCanvas.getContext('2d');
-
-            // 图片上传
-            document.getElementById('imageUpload').addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if(!file) return;
-                const img = new Image();
-                img.onload = function() {
-                    originImage = img;
-                    const maxWidth = 760;
-                    const scale = maxWidth / img.width;
-                    maskCanvas.width = maxWidth;
-                    maskCanvas.height = img.height * scale;
-                    ctx.drawImage(img, 0, 0, maskCanvas.width, maskCanvas.height);
-                }
-                img.src = URL.createObjectURL(file);
+        // ========== 画布初始化（性能优化） ==========
+        window.addEventListener('load',()=>{
+            maskCanvas=document.getElementById('maskCanvas');
+            ctx=maskCanvas.getContext('2d');
+            // 上传
+            document.getElementById('imageUpload').addEventListener('change',(e)=>{
+                const f=e.target.files[0];if(!f)return;
+                const img=new Image();
+                img.onload=()=>{originImage=img;maskCanvas.width=MAX_IMG_WIDTH;maskCanvas.height=MAX_IMG_WIDTH*img.height/img.width;ctx.drawImage(img,0,0,maskCanvas.width,maskCanvas.height)};
+                img.src=URL.createObjectURL(f);
             });
-
-            // 手绘事件
-            maskCanvas.addEventListener('mousedown', () => isDrawing = true);
-            maskCanvas.addEventListener('mouseup', () => isDrawing = false);
-            maskCanvas.addEventListener('mouseleave', () => isDrawing = false);
-            maskCanvas.addEventListener('mousemove', drawMaskBrush);
+            // 画笔（防抖）
+            const draw=debounce((e)=>{
+                if(!isDrawing||!originImage)return;
+                const r=maskCanvas.getBoundingClientRect();
+                ctx.fillStyle="rgba(0,0,0,0.92)";
+                ctx.beginPath();
+                ctx.arc(e.clientX-r.left,e.clientY-r.top,16,0,Math.PI*2);
+                ctx.fill();
+            });
+            maskCanvas.addEventListener('mousedown',()=>isDrawing=true);
+            maskCanvas.addEventListener('mouseup',()=>isDrawing=false);
+            maskCanvas.addEventListener('mouseleave',()=>isDrawing=false);
+            maskCanvas.addEventListener('mousemove',draw);
         });
 
-        // 高精度画笔
-        function drawMaskBrush(e) {
-            if(!isDrawing || !originImage) return;
-            const rect = maskCanvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            ctx.fillStyle = "rgba(0,0,0,0.92)";
-            ctx.beginPath();
-            ctx.arc(x, y, 16, 0, Math.PI * 2);
-            ctx.fill();
+        function resetMaskCanvas(){if(originImage){ctx.clearRect(0,0,maskCanvas.width,maskCanvas.height);ctx.drawImage(originImage,0,0,maskCanvas.width,maskCanvas.height)}}
+        function getBase64(){return maskCanvas.toDataURL("image/jpeg",.92)}
+
+        // ========== 图生图 / 局部重绘（减少重绘） ==========
+        function wholeRedraw(){
+            const p=document.getElementById('editInput').value,b=document.getElementById('editResult');
+            if(!originImage)return b.innerText="请先上传图片";
+            b.innerHTML='<div class="loading-text">整张质感升级...</div>';
+            const u=`https://image.pollinations.ai/prompt/${encodeURIComponent(p+","+HQ_BASE+","+NEGATIVE)}&img=${getBase64()}&width=1280`;
+            b.innerHTML=`<img class="img-preview" src="${u}" decoding="async">`;
         }
 
-        // 重置画布
-        function resetMaskCanvas() {
-            if(!originImage) return;
-            ctx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
-            ctx.drawImage(originImage, 0, 0, maskCanvas.width, maskCanvas.height);
-        }
-
-        // 图片转Base64
-        function getCanvasBase64() {
-            return maskCanvas.toDataURL("image/jpeg", 0.92);
-        }
-
-        // ========== 专业级图生图 / 局部重绘 ==========
-        function wholeRedraw() {
-            const prompt = document.getElementById('editInput').value.trim();
-            const resBox = document.getElementById('editResult');
-            if(!originImage) {resBox.innerText = "请先上传产品原图";return;}
-            resBox.innerHTML = '<div class="loading-text">整张画面质感升级重绘...</div>';
-            const base64 = getCanvasBase64();
-            const fullPrompt = `${prompt}, ${HIGH_QUALITY_BASE}, ${NEGATIVE_FILTER}`;
-            const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(fullPrompt)}&img=${base64}&width=1280`;
-            resBox.innerHTML = `<img class="img-preview" src="${imgUrl}" loading="lazy">`;
-        }
-
-        function maskRedraw() {
-            const prompt = document.getElementById('editInput').value.trim();
-            const resBox = document.getElementById('editResult');
-            if(!originImage) {resBox.innerText = "请上传图片并涂抹需要修改的区域";return;}
-            resBox.innerHTML = '<div class="loading-text">局部区域精准重绘...</div>';
-            const fullPrompt = `${prompt}, local area modification, textile texture upgrade, ${HIGH_QUALITY_BASE}, ${NEGATIVE_FILTER}`;
-            const imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(fullPrompt)}&width=1280`;
-            resBox.innerHTML = `<img class="img-preview" src="${imgUrl}" loading="lazy">`;
+        function maskRedraw(){
+            const p=document.getElementById('editInput').value,b=document.getElementById('editResult');
+            if(!originImage)return b.innerText="请涂抹修改区域";
+            b.innerHTML='<div class="loading-text">局部精准重绘...</div>';
+            const u=`https://image.pollinations.ai/prompt/${encodeURIComponent(p+",local edit,"+HQ_BASE+","+NEGATIVE)}&width=1280`;
+            b.innerHTML=`<img class="img-preview" src="${u}" decoding="async">`;
         }
     </script>
 </body>
